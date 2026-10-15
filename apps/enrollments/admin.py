@@ -10,14 +10,14 @@ class GroupAdmin(admin.ModelAdmin):
 
 @admin.register(Enrollment)
 class EnrollmentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'student', 'course_name', 'status', 'enrolled_at')
+    list_display = ('id', 'student', 'course', 'status', 'enrolled_at')
     list_filter = ('status', 'enrolled_at')
-    search_fields = ('student__username', 'course_name')
+    search_fields = ('student__username', 'course__title')
     list_editable = ('status',)
 
 
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
-    list_display = ('course_name', 'day_of_week', 'start_time', 'end_time', 'classroom')
+    list_display = ('course', 'day_of_week', 'start_time', 'end_time', 'classroom')
     list_filter = ('day_of_week',)
-    search_fields = ('course_name', 'classroom')
+    search_fields = ('course__title', 'classroom')
