@@ -1,3 +1,8 @@
-from django.shortcuts import render
 
-# Create your views here.
+from django.http import JsonResponse
+
+
+def courses_home(request):
+    return JsonResponse({
+        "message": "Courses app is working",
+    })
