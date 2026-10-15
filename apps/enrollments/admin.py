@@ -1,3 +1,23 @@
 from django.contrib import admin
+from .models import Group, Enrollment, Schedule
 
-# Register your models here.
+
+@admin.register(Group)
+class GroupAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'specialty')
+    search_fields = ('name', 'specialty')
+
+
+@admin.register(Enrollment)
+class EnrollmentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'student', 'course_name', 'status', 'enrolled_at')
+    list_filter = ('status', 'enrolled_at')
+    search_fields = ('student__username', 'course_name')
+    list_editable = ('status',)
+
+
+@admin.register(Schedule)
+class ScheduleAdmin(admin.ModelAdmin):
+    list_display = ('course_name', 'day_of_week', 'start_time', 'end_time', 'classroom')
+    list_filter = ('day_of_week',)
+    search_fields = ('course_name', 'classroom')
