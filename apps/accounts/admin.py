@@ -6,6 +6,29 @@ from .models import StudentProfile, TeacherProfile, User
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
+    list_display = (
+        "username",
+        "email",
+        "first_name",
+        "last_name",
+        "role",
+        "is_active",
+        "is_staff",
+    )
+
+    list_filter = (
+        "role",
+        "is_active",
+        "is_staff",
+    )
+
+    search_fields = (
+        "username",
+        "email",
+        "first_name",
+        "last_name",
+    )
+
     fieldsets = UserAdmin.fieldsets + (
         (
             "University information",
@@ -24,70 +47,60 @@ class CustomUserAdmin(UserAdmin):
         ),
     )
 
-    list_display = (
-        "username",
-        "email",
-        "first_name",
-        "last_name",
-        "role",
-        "is_staff",
-        "is_active",
+    actions = (
+        "activate_users",
+        "deactivate_users",
     )
 
-    list_filter = (
-        "role",
-        "is_staff",
-        "is_superuser",
-        "is_active",
-    )
+    @admin.action(description="Activate selected users")
+    def activate_users(self, request, queryset) -> None:
+        queryset.update(is_active=True)
 
-    search_fields = (
-        "username",
-        "email",
-        "first_name",
-        "last_name",
-    )
-
-    ordering = ("username",)
+    @admin.action(description="Deactivate selected users")
+    def deactivate_users(self, request, queryset) -> None:
+        queryset.update(is_active=False)
 
 
 @admin.register(StudentProfile)
 class StudentProfileAdmin(admin.ModelAdmin):
     list_display = (
-        "student_id",
+        "student_number",
         "user",
-        "faculty",
-        "year_of_study",
+        "department",
+        "enrollment_year",
     )
 
     search_fields = (
-        "student_id",
+        "student_number",
         "user__username",
         "user__first_name",
         "user__last_name",
     )
 
     list_filter = (
-        "faculty",
-        "year_of_study",
+        "department",
+        "enrollment_year",
     )
 
 
 @admin.register(TeacherProfile)
 class TeacherProfileAdmin(admin.ModelAdmin):
     list_display = (
+        "employee_number",
         "user",
         "department",
-        "position",
+        "title",
     )
 
     search_fields = (
+        "employee_number",
         "user__username",
         "user__first_name",
         "user__last_name",
+        "department",
     )
 
     list_filter = (
         "department",
-        "position",
+        "title",
     )
