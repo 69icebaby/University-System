@@ -24,15 +24,15 @@ class StudentProfile(models.Model):
         on_delete=models.CASCADE,
         related_name="student_profile",
     )
-    student_number = models.CharField(
-        max_length=30,
+    student_id = models.CharField(
+        max_length=20,
         unique=True,
     )
-    department = models.CharField(max_length=150)
-    enrollment_year = models.PositiveSmallIntegerField()
+    faculty = models.CharField(max_length=100)
+    year_of_study = models.PositiveSmallIntegerField()
 
     def __str__(self) -> str:
-        return f"{self.student_number} - {self.user.username}"
+        return f"{self.student_id} - {self.user.username}"
 
 
 class TeacherProfile(models.Model):
@@ -41,12 +41,8 @@ class TeacherProfile(models.Model):
         on_delete=models.CASCADE,
         related_name="teacher_profile",
     )
-    employee_number = models.CharField(
-        max_length=30,
-        unique=True,
-    )
-    department = models.CharField(max_length=150)
-    title = models.CharField(max_length=100)
+    department = models.CharField(max_length=100)
+    position = models.CharField(max_length=100)
 
     def __str__(self) -> str:
-        return f"{self.employee_number} - {self.user.username}"
+        return self.user.username

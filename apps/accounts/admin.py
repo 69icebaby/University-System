@@ -64,36 +64,34 @@ class CustomUserAdmin(UserAdmin):
 @admin.register(StudentProfile)
 class StudentProfileAdmin(admin.ModelAdmin):
     list_display = (
-        "student_number",
+        "student_id",
         "user",
-        "department",
-        "enrollment_year",
+        "faculty",
+        "year_of_study",
     )
 
     search_fields = (
-        "student_number",
+        "student_id",
         "user__username",
         "user__first_name",
         "user__last_name",
     )
 
     list_filter = (
-        "department",
-        "enrollment_year",
+        "faculty",
+        "year_of_study",
     )
 
 
 @admin.register(TeacherProfile)
 class TeacherProfileAdmin(admin.ModelAdmin):
     list_display = (
-        "employee_number",
         "user",
         "department",
-        "title",
+        "position",
     )
 
     search_fields = (
-        "employee_number",
         "user__username",
         "user__first_name",
         "user__last_name",
@@ -102,5 +100,5 @@ class TeacherProfileAdmin(admin.ModelAdmin):
 
     list_filter = (
         "department",
-        "title",
+        "position",
     )
