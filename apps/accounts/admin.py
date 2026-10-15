@@ -31,6 +31,7 @@ class CustomUserAdmin(UserAdmin):
         "last_name",
         "role",
         "is_staff",
+        "is_active",
     )
 
     list_filter = (
@@ -47,6 +48,8 @@ class CustomUserAdmin(UserAdmin):
         "last_name",
     )
 
+    ordering = ("username",)
+
 
 @admin.register(StudentProfile)
 class StudentProfileAdmin(admin.ModelAdmin):
@@ -56,12 +59,14 @@ class StudentProfileAdmin(admin.ModelAdmin):
         "faculty",
         "year_of_study",
     )
+
     search_fields = (
         "student_id",
         "user__username",
         "user__first_name",
         "user__last_name",
     )
+
     list_filter = (
         "faculty",
         "year_of_study",
@@ -75,11 +80,13 @@ class TeacherProfileAdmin(admin.ModelAdmin):
         "department",
         "position",
     )
+
     search_fields = (
         "user__username",
         "user__first_name",
         "user__last_name",
     )
+
     list_filter = (
         "department",
         "position",
