@@ -14,6 +14,9 @@ class User(AbstractUser):
         default=Role.STUDENT,
     )
 
+    def __str__(self) -> str:
+        return self.username
+
 
 class StudentProfile(models.Model):
     user = models.OneToOneField(
@@ -21,12 +24,20 @@ class StudentProfile(models.Model):
         on_delete=models.CASCADE,
         related_name="student_profile",
     )
-    student_id = models.CharField(max_length=20, unique=True)
+    student_id = models.CharField(
+        max_length=20,
+        unique=True,
+    )
     faculty = models.CharField(max_length=100)
     year_of_study = models.PositiveSmallIntegerField()
 
     def __str__(self) -> str:
-        return f"{self.user.get_full_name()} ({self.student_id})"
+        full_name = self.user.get_full_name()
+
+        if full_name:
+            return f"{full_name} ({self.student_id})"
+
+        return f"{self.user.username} ({self.student_id})"
 
 
 class TeacherProfile(models.Model):
